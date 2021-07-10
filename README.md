@@ -24,7 +24,9 @@ oots-get
 
 This will parse the OOTS website, then download any missing comics. These comics
 will be stored in the `comics/` subdirectory of the users home directory by
-default though this will be changable shortly via settings file
+default though this will be changable shortly via settings file.
+
+This package has been tested to work under both Linux and Windows 10.
 
 ## Configuration File
 
