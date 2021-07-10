@@ -1,5 +1,5 @@
 # Changelog
 
-## Version 0.1 (development)
+## Version 1.0.0b0 (Beta)
 
-- Initial development version
+- Initial beta release version
