@@ -1,3 +1,3 @@
 # Contributors
 
-* Grant Ramsay <seapagan@gmail.com>
+- Grant Ramsay <grant@gnramsay.com>
