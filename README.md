@@ -47,6 +47,7 @@ Not in any specific order :
 - Option to save log file for each run.
 - Add testing!
 - Add colours to the output, just because.
+- Add option to start checking at the last downloaded comic instead of start.
 
 ## Contributing
 
