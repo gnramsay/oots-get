@@ -103,8 +103,9 @@ def parse_args(args):
     :return: A Parser Object
     :rtype: ArguementParser
     """
+
     parser = argparse.ArgumentParser(
-        description="OOTSget (C) Grant Ramsay 2021"
+        description=f"OOTSget (C) Grant Ramsay 2021 (Version {__version__})"
     )
     parser.add_argument(
         "--version",
