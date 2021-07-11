@@ -1,6 +1,6 @@
 # oots-get
 
-Web scraper to automatically download comics from [The Order of the Stick](oots)
+Web scraper to automatically download comics from [The Order of the Stick][oots]
 
 ## Contents
 

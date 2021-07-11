@@ -1,0 +1,10 @@
+pytest
+coverage
+pytest-coverage
+twine
+build
+colorama
+termcolor
+bs4
+requests
+sphinx

@@ -57,6 +57,46 @@ Not in any specific order :
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
+## Building
+
+### Create an 'editable' install
+
+From the root of the project, run the following which will install an editable
+version of the package. This updates as you change the source, so no need to
+keep reinstalling the package to test :
+
+```bash
+pip install -e .
+```
+
+(Do not forget the tailing period!)
+
+### Build Package
+
+Install dependencies :
+
+```bash
+pip install -r requirements.txt
+```
+
+Run Tests. There are only dummy tests at the moment, this will change shortly :
+
+```bash
+pytest
+```
+
+To create the source and wheel packages :
+
+```bash
+python -m build
+```
+
+Build documentation (from the docs subdiretory) :
+
+```bash
+make html
+```
+
 ## Copyright
 
 (C) Grant Ramsay (grant@gnramsay.com) 2021.
