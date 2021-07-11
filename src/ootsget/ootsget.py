@@ -14,6 +14,8 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup
+from colorama import init
+from termcolor import colored, cprint
 
 from ootsget import __version__
 
@@ -35,9 +37,13 @@ def get_webpage(page_url):
         return result.text
     else:
         _logger.error(
-            "Unable to read the OOTS data,please check your connection."
+            colored(
+                "Unable to read the OOTS data,please check your connection.",
+                "red",
+                attrs=["bold"],
+            )
         )
-        _logger.error(f"URL : {page_url}")
+        _logger.error(colored(f"URL : {page_url}", "red"))
         quit(1)
 
 
@@ -81,11 +87,11 @@ def save_image(image_url, filename):
             result.raw.decode_content = True
             with open(filepath, "wb") as f:
                 shutil.copyfileobj(result.raw, f)
-            print(f"Saved {filepath}")
+            cprint(f"Saved {filepath}", "green")
         else:
             print("Huh?")
     else:
-        print(f"Skipping {filepath}, already exists.")
+        cprint(f"Skipping {filepath}, already exists.", "yellow")
 
 
 def parse_args(args):
@@ -150,9 +156,12 @@ def main(args):
     """
     args = parse_args(args)
     setup_logging(args.loglevel)
+    # setup colorama for cross-platform coloured terminal output
+    init()
+
     _logger.debug("Starting data slurping...")
     print(f"oots-get (C) Grant Ramsay 2021 (version {__version__})\n")
-    print(f"Saving Comics to {get_abs_path(OUTPUT_DIR)}\n")
+    cprint(f"Saving Comics to {get_abs_path(OUTPUT_DIR)}\n", "cyan")
     # get the raw webpage
     webdata = get_webpage(OOTS_URL)
     # parse it with Beautiful Soup
@@ -182,6 +191,7 @@ def main(args):
         # save that image
         save_image(image_url, filename)
 
+    print("Operation Completed.\n")
     _logger.info("Script ends here")
 
 
