@@ -114,6 +114,13 @@ def parse_args(args):
     )
 
     parser.add_argument(
+        "--only-new",
+        "-n",
+        action="store_true",
+        help="Only check for, and download, new comics.",
+    )
+
+    parser.add_argument(
         "-v",
         "--verbose",
         dest="loglevel",
@@ -148,6 +155,13 @@ def setup_logging(loglevel):
     )
 
 
+def get_last_comic():
+    """Return string with the number of last comic downloaded."""
+    return sorted(os.listdir(get_abs_path(OUTPUT_DIR)), reverse=True)[0].split(
+        "-"
+    )[0]
+
+
 def main(args):
     """
     Run the main function with logging.
@@ -163,6 +177,13 @@ def main(args):
     _logger.debug("Starting data slurping...")
     print(f"oots-get (C) Grant Ramsay 2021 (version {__version__})\n")
     cprint(f"Saving Comics to {get_abs_path(OUTPUT_DIR)}\n", "cyan")
+
+    # do specific depending on any command line arguements.
+    if args.only_new:
+        last_id = get_last_comic()
+    else:
+        last_id = 0
+
     # get the raw webpage
     webdata = get_webpage(OOTS_URL)
     # parse it with Beautiful Soup
@@ -170,15 +191,19 @@ def main(args):
     # just get the stuff we want
     links = bs.find_all("p", attrs={"class": "ComicList"})
     # iterate over each link
-    # for item in reversed(links):
     for item in links:
         # create a filename from the title
         index, filename = item.text.split("-", 1)
+        # zero pad the index to minimum 4 chars
+        index = index.strip().zfill(4)
+
+        # break here if we are only getting new comics
+        if last_id >= index:
+            break
+
         # make it 'filename safe'
         filename = filename.strip().replace(" ", "-").replace("/", "-")
         filename = re.sub(r"[?:.#,!'\"]", "", filename)
-        # zero pad the index to minimum 4 chars
-        index = index.strip().zfill(4)
         # create the final filename
         filename = f"{index}-{filename}"
 
