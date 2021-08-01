@@ -1,13 +1,15 @@
 # oots-get
 
-This is a simple Python script to maintain a local archive of the web comic ['The Order of the Stick'][oots], though can probably be modified reasonably easily for others if required.
+This is a simple Python script to maintain a local archive of the web comic
+['The Order of the Stick'][oots], though can probably be modified reasonably
+easily for others if required.
 
 This is a __work in progress__ although base functionality is working perfectly.
 
 Primarily an exercise in using ['Beautiful Soup'][bs] with a live target. Also I
 love this comic and often spend time without internet.
 
-This is a rewrite of my original Ruby script of the same name.
+This is a rewrite from scratch of my original Ruby script of the same name.
 
 ## Usage
 
@@ -23,7 +25,7 @@ oots-get
 ```
 
 This will parse the OOTS website, then download any missing comics. These comics
-will be stored in the `comics/` subdirectory of the users home directory by
+will be stored in the `comics/oots` subdirectory of the users home directory by
 default though this will be changable shortly via settings file.
 
 This package has been tested to work under both Linux and Windows 10.
@@ -34,20 +36,24 @@ To be added.
 
 ## Command line switches
 
-To be added.
+- `--only-new` ( short form: `-n`) : only check for new up to the last comic
+  already downloaded, this speeds up operation.
 
 ## To-Do
 
 Not in any specific order :
 
 - Improve error-checking and recovery
-- Add command line options to modify configuration, and a config file. Any options on command line to have precedence over settings specified in the configuration file.
+- Add command line options to modify configuration, and a config file. Any
+  options on command line to have precedence over settings specified in the
+  configuration file.
 - Add command line options for quiet as well as the existing verbose, with same
   options in the config file.
 - Option to save log file for each run.
 - Add testing!
-- Add colours to the output, just because.
-- Add option to start checking at the last downloaded comic instead of start.
+- ~~Add colours to the output, just because.~~
+- ~~Add option to start checking at the last downloaded comic instead of
+  start.~~
 
 ## Contributing
 
