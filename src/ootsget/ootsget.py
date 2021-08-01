@@ -105,7 +105,7 @@ def parse_args(args):
     """
 
     parser = argparse.ArgumentParser(
-        description=f"OOTSget (C) Grant Ramsay 2021 (Version {__version__})"
+        description=f"oots-get (C) Grant Ramsay 2021 (Version {__version__})"
     )
     parser.add_argument(
         "--version",
@@ -170,7 +170,8 @@ def main(args):
     # just get the stuff we want
     links = bs.find_all("p", attrs={"class": "ComicList"})
     # iterate over each link
-    for item in reversed(links):
+    # for item in reversed(links):
+    for item in links:
         # create a filename from the title
         index, filename = item.text.split("-", 1)
         # make it 'filename safe'
