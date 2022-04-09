@@ -1,5 +1,4 @@
-"""
-OOTS-Get Archiver.
+"""OOTS-Get Archiver.
 
 Create a local archive of the excellent web comic "The Order Of the Stick
 (https://www.giantitp.com/comics/oots.html), comic images only.
@@ -15,9 +14,8 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 from colorama import init
-from termcolor import colored, cprint
-
 from ootsget import __version__
+from termcolor import colored, cprint
 
 OOTS_URL = "https://www.giantitp.com/comics/oots.html"
 COMIC_TEMPLATE = "https://www.giantitp.com/comics/oots{index}.html"
@@ -48,8 +46,7 @@ def get_webpage(page_url):
 
 
 def check_or_create_folder(folder_path):
-    """
-    Check if the provided folder exists, create if not
+    """Check if the provided folder exists, and create if not.
 
     :param folder_path: Path to folder to create.
     :type folder_path: String
@@ -59,8 +56,7 @@ def check_or_create_folder(folder_path):
 
 
 def get_abs_path(file_path):
-    """
-    Return an absolute path, expanding '~' and exvironment variables.
+    """Return an absolute path, expanding '~' and exvironment variables.
 
     :param file_path: Path to be expanded
     :type file_path: String
@@ -71,8 +67,7 @@ def get_abs_path(file_path):
 
 
 def save_image(image_url, filename):
-    """
-    Save the given url to the provided file.
+    """Save the given url to the provided file.
 
     :param image_url: URL to an image file
     :type image_url: string
@@ -95,15 +90,13 @@ def save_image(image_url, filename):
 
 
 def parse_args(args):
-    """
-    Parse the Command line parameters.
+    """Parse the Command line parameters.
 
     :param args: Comand line parameters passed by the user
     :type args: [type]
     :return: A Parser Object
     :rtype: ArguementParser
     """
-
     parser = argparse.ArgumentParser(
         description=f"oots-get (C) Grant Ramsay 2021 (Version {__version__})"
     )
@@ -140,8 +133,7 @@ def parse_args(args):
 
 
 def setup_logging(loglevel):
-    """
-    Setup the logging level requested or use default.
+    """Setup the logging level requested or use default.
 
     :param loglevel: requested loglevel.
     :type loglevel: [type]
@@ -157,14 +149,15 @@ def setup_logging(loglevel):
 
 def get_last_comic():
     """Return string with the number of last comic downloaded."""
-    return sorted(os.listdir(get_abs_path(OUTPUT_DIR)), reverse=True)[0].split(
-        "-"
-    )[0]
+    return int(
+        sorted(os.listdir(get_abs_path(OUTPUT_DIR)), reverse=True)[0].split(
+            "-"
+        )[0]
+    )
 
 
 def main(args):
-    """
-    Run the main function with logging.
+    """Run the main function with logging.
 
     :param args: Command line args passed by user
     :type args: [type]
@@ -198,7 +191,7 @@ def main(args):
         index = index.strip().zfill(4)
 
         # break here if we are only getting new comics
-        if last_id >= index:
+        if last_id >= int(index):
             break
 
         # make it 'filename safe'
