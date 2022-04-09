@@ -56,7 +56,7 @@ def check_or_create_folder(folder_path):
 
 
 def get_abs_path(file_path):
-    """Return an absolute path, expanding '~' and exvironment variables.
+    """Return an absolute path, expanding '~' and environment variables.
 
     :param file_path: Path to be expanded
     :type file_path: String
@@ -148,7 +148,7 @@ def setup_logging(loglevel):
 
 
 def get_last_comic():
-    """Return string with the number of last comic downloaded."""
+    """Return the index number of the last (highest) comic downloaded."""
     return int(
         sorted(os.listdir(get_abs_path(OUTPUT_DIR)), reverse=True)[0].split(
             "-"
@@ -171,44 +171,35 @@ def main(args):
     print(f"oots-get (C) Grant Ramsay 2021 (version {__version__})\n")
     cprint(f"Saving Comics to {get_abs_path(OUTPUT_DIR)}\n", "cyan")
 
+    check_or_create_folder(OUTPUT_DIR)
+
     # do specific depending on any command line arguements.
     if args.only_new:
         last_id = get_last_comic()
     else:
         last_id = 0
 
-    # get the raw webpage
+    # get the comic index webpage and parse the links
     webdata = get_webpage(OOTS_URL)
-    # parse it with Beautiful Soup
     bs = BeautifulSoup(webdata, "lxml")
-    # just get the stuff we want
     links = bs.find_all("p", attrs={"class": "ComicList"})
-    # iterate over each link
     for item in links:
-        # create a filename from the title
         index, filename = item.text.split("-", 1)
-        # zero pad the index to minimum 4 chars
         index = index.strip().zfill(4)
 
         # break here if we are only getting new comics
         if last_id >= int(index):
             break
 
-        # make it 'filename safe'
         filename = filename.strip().replace(" ", "-").replace("/", "-")
         filename = re.sub(r"[?:.#,!'\"]", "", filename)
-        # create the final filename
         filename = f"{index}-{filename}"
 
-        # we now get the specific comic page for this item
+        # we now get the specific comic for this item
         comicdata = get_webpage(COMIC_TEMPLATE.format(index=index.strip()))
-        # parse it to get the relevant image
         bs = BeautifulSoup(comicdata, "lxml")
         image = bs.find("img", attrs={"src": re.compile("/comics/oots/")})
         image_url = image.get("src")
-        # make sure the filder exists, create if not
-        check_or_create_folder(OUTPUT_DIR)
-        # save that image
         save_image(image_url, filename)
 
     print("Operation Completed.\n")
