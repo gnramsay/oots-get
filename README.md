@@ -1,5 +1,9 @@
 # oots-get
 
+[![PyPI version fury.io](https://badge.fury.io/py/oots-get.svg)](https://pypi.python.org/pypi/oots-get/)
+[![PyPI license](https://img.shields.io/pypi/l/oots-get.svg)](https://pypi.python.org/pypi/oots-get/)
+[![PyPI status](https://img.shields.io/pypi/status/oots-get.svg)](https://pypi.python.org/pypi/oots-get/)
+
 This is a simple Python script to maintain a local archive of the web comic
 ['The Order of the Stick'][oots], though can probably be modified reasonably
 easily for others if required.
