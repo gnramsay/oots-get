@@ -208,7 +208,10 @@ def main(args):
 
 def run():
     """Call :func:`main` passing any CLI arguments."""
-    main(sys.argv[1:])
+    try:
+        main(sys.argv[1:])
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == "__main__":
