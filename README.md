@@ -13,8 +13,11 @@ This is a rewrite from scratch of my original Ruby script of the same name.
 
 ## Usage
 
-Currently not uploaded to Pypi.org, latest wheel for local installation will be
-attached to the Github repository as a release. PyPi release coming shortly.
+### Install
+
+```python
+pip install oots-get
+```
 
 ### Quick start
 
