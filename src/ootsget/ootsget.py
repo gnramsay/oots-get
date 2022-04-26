@@ -98,7 +98,7 @@ def parse_args(args):
     :rtype: ArguementParser
     """
     parser = argparse.ArgumentParser(
-        description=f"oots-get (C) Grant Ramsay 2021 (Version {__version__})"
+        description=f"oots-get (C) Grant Ramsay 2022 (Version {__version__})"
     )
     parser.add_argument(
         "--version",
@@ -168,7 +168,7 @@ def main(args):
     init()
 
     _logger.debug("Starting data slurping...")
-    print(f"oots-get (C) Grant Ramsay 2021 (version {__version__})\n")
+    print(f"oots-get (C) Grant Ramsay 2022 (version {__version__})\n")
     cprint(f"Saving Comics to {get_abs_path(OUTPUT_DIR)}\n", "cyan")
 
     check_or_create_folder(OUTPUT_DIR)
