@@ -1,13 +1,30 @@
 [tool.poetry]
 name = "oots-get"
-version = "1.0.3"
-description = "Get comics from 'The Order of the Stick'"
+version = "1.1.0"
+description = "Download all 'Order of the Stick' comics for local reading."
 authors = ["Grant Ramsay <grant@gnramsay.com>"]
 license = "MIT"
 readme = "README.md"
 
+packages = [{ include = "ootsget" }]
+
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Topic :: Utilities",
+  "Intended Audience :: End Users/Desktop",
+  "Environment :: Console",
+]
+
+[tool.poetry.urls]
+"Pull Requests" = "https://github.com/gnramsay/oots-get/pulls"
+"Bug Tracker" = "https://github.com/gnramsay/oots-get/issues"
+# "Changelog" = "https://github.com/gnramsay/oots-get/blob/main/CHANGELOG.md"
+
 [tool.poetry.scripts]
-oots-get = "ootsget.ootsget"
+oots-get = "ootsget.ootsget:run"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -19,7 +36,13 @@ termcolor = "^2.3.0"
 bs4 = "^0.0.1"
 requests = "^2.29.0"
 sphinx = "^6.2.1"
+lxml = "^5.1.0"
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.13"
+mypy = "^1.8.0"
+types-requests = "^2.31.0.20240106"
+types-beautifulsoup4 = "^4.12.0.20240106"
 
 [build-system]
 requires = ["poetry-core"]
