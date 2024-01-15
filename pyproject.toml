@@ -1,6 +1,26 @@
+[tool.poetry]
+name = "oots-get"
+version = "1.0.3"
+description = "Get comics from 'The Order of the Stick'"
+authors = ["Grant Ramsay <grant@gnramsay.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.scripts]
+oots-get = "ootsget.ootsget"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pytest = "^7.3.1"
+coverage = "^7.2.3"
+pytest-coverage = "^0.0"
+colorama = "^0.4.6"
+termcolor = "^2.3.0"
+bs4 = "^0.0.1"
+requests = "^2.29.0"
+sphinx = "^6.2.1"
+
+
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
