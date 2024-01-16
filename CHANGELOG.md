@@ -5,6 +5,16 @@ project since the first release, with the latest changes at the top.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.1.0](https://github.com/gnramsay/oots-get/releases/tag/v1.1.0) (January 16, 2024)
+
+**_'New Dice Please'_**
+
+**Refactoring**
+
+- Update tooling and fix all linting/type warnings, migrate to Pathlib for all file operations ([#7](https://github.com/gnramsay/oots-get/pull/7)) by [seapagan](https://github.com/seapagan)
+
+[`Full Changelog`](https://github.com/gnramsay/oots-get/compare/v1.1.0b-beta-1...v1.1.0) | [`Diff`](https://github.com/gnramsay/oots-get/compare/v1.1.0b-beta-1...v1.1.0.diff) | [`Patch`](https://github.com/gnramsay/oots-get/compare/v1.1.0b-beta-1...v1.1.0.patch)
+
 ## [v1.1.0b-beta-1](https://github.com/gnramsay/oots-get/releases/tag/v1.1.0b-beta-1) (January 16, 2024)
 
 **_'Stick With It'_**
