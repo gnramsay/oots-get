@@ -41,6 +41,7 @@ types-requests = "^2.31.0.20240106"
 types-beautifulsoup4 = "^4.12.0.20240106"
 poethepoet = "^0.24.4"
 pre-commit = "^3.6.0"
+github-changelog-md = "^0.8.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -56,6 +57,16 @@ format.cmd = "ruff format ."
 format.help = "Format code with Ruff"
 ruff.cmd = "ruff check ."
 ruff.help = "Run Ruff checks"
+markdown.cmd = "pymarkdown scan  -r py_maker/**/[!CHANGELOG,!.github/]*.md docs/**/*.md"
+markdown.help = "Run markdown checks"
+
+# Generate a CHANGELOG.md
+changelog.cmd = "github-changelog-md -r oots-get -u gnramsay"
+changelog.help = "Generate a CHANGELOG.md file"
+
+[tool.pymarkdown]
+plugins.md014.enabled = false
+plugins.md046.enabled = false
 
 [tool.ruff]
 line-length = 80
