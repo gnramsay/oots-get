@@ -34,16 +34,12 @@ def get_webpage(page_url: str) -> str:
     result = requests.get(page_url, timeout=10)
     if result.status_code == 200:
         return result.text
-    else:
-        _logger.error(
-            colored(
-                "Unable to read the OOTS data,please check your connection.",
-                "red",
-                attrs=["bold"],
-            )
-        )
-        _logger.error(colored(f"URL : {page_url}", "red"))
-        quit(1)
+
+    _logger.error(
+        "Unable to read the OOTS data,please check your connection.",
+    )
+    _logger.error("URL : %s", page_url)
+    sys.exit(1)
 
 
 def check_or_create_folder(folder_path: str) -> None:
@@ -82,11 +78,11 @@ def save_image(image_url: str, filename: str) -> None:
             result.raw.decode_content = True
             with open(filepath, "wb") as f:
                 shutil.copyfileobj(result.raw, f)
-            cprint(f"Saved {filepath}", "green")
+            print(f"[green]Saved {filepath}")
         else:
             print("Huh?")
     else:
-        cprint(f"Skipping {filepath}, already exists.", "yellow")
+        print(f"[yellow]Skipping {filepath}, already exists.")
 
 
 def parse_args(args: list[str]) -> argparse.Namespace:
@@ -169,7 +165,7 @@ def main(raw_args: list[str]) -> None:
 
     _logger.debug("Starting data slurping...")
     print(f"oots-get (C) Grant Ramsay 2024 (version {__version__})\n")
-    cprint(f"Saving Comics to {get_abs_path(OUTPUT_DIR)}\n", "cyan")
+    print(f"[cyan]Saving Comics to {get_abs_path(OUTPUT_DIR)}\n")
 
     check_or_create_folder(OUTPUT_DIR)
 

@@ -33,6 +33,7 @@ termcolor = "^2.3.0"
 bs4 = "^0.0.1"
 requests = "^2.29.0"
 lxml = "^5.1.0"
+rich = "^13.7.0"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.13"
