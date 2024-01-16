@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "oots-get"
-version = "1.1.0"
+version = "1.1.0-beta.1"
 description = "Download all 'Order of the Stick' comics for local reading."
 authors = ["Grant Ramsay <grant@gnramsay.com>"]
 license = "MIT"
@@ -28,14 +28,10 @@ oots-get = "ootsget.ootsget:run"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-pytest = "^7.3.1"
-coverage = "^7.2.3"
-pytest-coverage = "^0.0"
 colorama = "^0.4.6"
 termcolor = "^2.3.0"
 bs4 = "^0.0.1"
 requests = "^2.29.0"
-sphinx = "^6.2.1"
 lxml = "^5.1.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -43,10 +39,23 @@ ruff = "^0.1.13"
 mypy = "^1.8.0"
 types-requests = "^2.31.0.20240106"
 types-beautifulsoup4 = "^4.12.0.20240106"
+poethepoet = "^0.24.4"
+pre-commit = "^3.6.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+# setup 'PoeThePoet' tasks
+pre.cmd = "pre-commit run --all-files"
+pre.help = "Run pre-commit checks"
+mypy.cmd = "mypy ootsget/**/*.py tests/**/*.py --strict"
+mypy.help = "Run mypy checks"
+format.cmd = "ruff format ."
+format.help = "Format code with Ruff"
+ruff.cmd = "ruff check ."
+ruff.help = "Run Ruff checks"
 
 [tool.ruff]
 line-length = 80
