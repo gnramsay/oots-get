@@ -11,16 +11,17 @@ import os
 import re
 import shutil
 import sys
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
-from rich import print
+from rich import print  # pylint: disable=W0622
 
 from ootsget import __version__
 
-OOTS_URL = "https://www.giantitp.com/comics/oots.html"
-COMIC_TEMPLATE = "https://www.giantitp.com/comics/oots{index}.html"
-OUTPUT_DIR = "~/comics/oots/"
+OOTS_URL: str = "https://www.giantitp.com/comics/oots.html"
+COMIC_TEMPLATE: str = "https://www.giantitp.com/comics/oots{index}.html"
+OUTPUT_DIR: Path = Path(Path.home() / "comics" / "oots")
 
 STATUS_OK = 200
 
@@ -44,24 +45,13 @@ def get_webpage(page_url: str) -> str:
     sys.exit(1)
 
 
-def check_or_create_folder(folder_path: str) -> None:
+def check_or_create_folder(folder_path: Path) -> None:
     """Check if the provided folder exists, and create if not.
 
     :param folder_path: Path to folder to create.
     :type folder_path: String
     """
-    os.makedirs(get_abs_path(folder_path), exist_ok=True)
-
-
-def get_abs_path(file_path: str) -> str:
-    """Return an absolute path, expanding '~' and environment variables.
-
-    :param file_path: Path to be expanded
-    :type file_path: String
-    :return: Expanded Path
-    :rtype: String
-    """
-    return os.path.abspath(os.path.expanduser(os.path.expandvars(file_path)))
+    folder_path.mkdir(parents=True, exist_ok=True)
 
 
 def save_image(image_url: str, filename: str) -> None:
@@ -73,12 +63,12 @@ def save_image(image_url: str, filename: str) -> None:
     :type filename: string
     """
     extension = image_url[-4:]
-    filepath = get_abs_path(OUTPUT_DIR + filename + extension)
-    if not os.path.isfile(filepath):
+    filepath = OUTPUT_DIR / (filename + extension)
+    if not filepath.is_file():
         result = requests.get(image_url, stream=True, timeout=20)
         if result.status_code == STATUS_OK:
             result.raw.decode_content = True
-            with open(filepath, "wb") as f:
+            with filepath.open(mode="wb") as f:
                 shutil.copyfileobj(result.raw, f)
             print(f"[green]Saved {filepath}")
         else:
@@ -147,11 +137,7 @@ def setup_logging(loglevel: int) -> None:
 
 def get_last_comic() -> int:
     """Return the index number of the last (highest) comic downloaded."""
-    return int(
-        sorted(os.listdir(get_abs_path(OUTPUT_DIR)), reverse=True)[0].split(
-            "-"
-        )[0]
-    )
+    return int(sorted(os.listdir(OUTPUT_DIR), reverse=True)[0].split("-")[0])
 
 
 def main(raw_args: list[str]) -> None:
@@ -165,7 +151,7 @@ def main(raw_args: list[str]) -> None:
 
     _logger.debug("Starting data slurping...")
     print(f"oots-get (C) Grant Ramsay 2024 (version {__version__})\n")
-    print(f"[cyan]Saving Comics to {get_abs_path(OUTPUT_DIR)}\n")
+    print(f"[cyan]Saving Comics to {OUTPUT_DIR}\n")
 
     check_or_create_folder(OUTPUT_DIR)
 
@@ -192,6 +178,11 @@ def main(raw_args: list[str]) -> None:
         comicdata = get_webpage(COMIC_TEMPLATE.format(index=index.strip()))
         bs = BeautifulSoup(comicdata, "lxml")
         image = bs.find("img", attrs={"src": re.compile("/comics/oots/")})
+
+        if image is None:
+            _logger.error("Unable to find image for comic %s", index)
+            continue
+
         image_url = image.get("src")
         save_image(image_url, filename)
 
