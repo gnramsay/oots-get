@@ -21,7 +21,7 @@ from ootsget import __version__
 
 OOTS_URL: str = "https://www.giantitp.com/comics/oots.html"
 COMIC_TEMPLATE: str = "https://www.giantitp.com/comics/oots{index}.html"
-OUTPUT_DIR: Path = Path(Path.home() / "comics" / "oots")
+OUTPUT_DIR: Path = Path(Path.home() / "comics" / "oots2")
 
 STATUS_OK = 200
 
@@ -177,13 +177,13 @@ def main(raw_args: list[str]) -> None:
         # we now get the specific comic for this item
         comicdata = get_webpage(COMIC_TEMPLATE.format(index=index.strip()))
         bs = BeautifulSoup(comicdata, "lxml")
-        image = bs.find("img", attrs={"src": re.compile("/comics/oots/")})
+        image = bs.find_all("img", attrs={"src": re.compile("/comics/oots/")})
 
-        if image is None:
+        if len(image) == 0:
             _logger.error("Unable to find image for comic %s", index)
             continue
 
-        image_url = image.get("src")
+        image_url = image[0]["src"]
         save_image(image_url, filename)
 
     print("Operation Completed.\n")
