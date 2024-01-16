@@ -5,7 +5,21 @@ project since the first release, with the latest changes at the top.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v1.1.0](https://github.com/gnramsay/oots-get/releases/tag/v1.1.0) (January 16, 2024)
+## [v1.1.1](https://github.com/gnramsay/oots-get/releases/tag/v1.1.1) (January 16, 2024)
+
+**_'Fail your save vs typo'_**
+
+## BUGFIX
+
+- Update the comic storage folder to be correct.
+
+[`Full Changelog`](https://github.com/gnramsay/oots-get/compare/v1.1.0...v1.1.1) | [`Diff`](https://github.com/gnramsay/oots-get/compare/v1.1.0...v1.1.1.diff) | [`Patch`](https://github.com/gnramsay/oots-get/compare/v1.1.0...v1.1.1.patch)
+
+## [v1.1.0](https://github.com/gnramsay/oots-get/releases/tag/v1.1.0) (January 16, 2024) **[`YANKED`]**
+
+**This release has been removed for the following reason and should not be used:**
+
+- Incorrect folder for comic storage.
 
 **_'New Dice Please'_**
 
