@@ -5,6 +5,7 @@ Create a local archive of the excellent web comic "The Order Of the Stick
 """
 
 import argparse
+import contextlib
 import logging
 import os
 import re
@@ -13,14 +14,15 @@ import sys
 
 import requests
 from bs4 import BeautifulSoup
-from colorama import init
-from termcolor import colored, cprint
+from rich import print
 
 from ootsget import __version__
 
 OOTS_URL = "https://www.giantitp.com/comics/oots.html"
 COMIC_TEMPLATE = "https://www.giantitp.com/comics/oots{index}.html"
 OUTPUT_DIR = "~/comics/oots/"
+
+STATUS_OK = 200
 
 __author__ = "Grant Ramsay"
 __copyright__ = "Grant Ramsay"
@@ -32,7 +34,7 @@ _logger = logging.getLogger(__name__)
 def get_webpage(page_url: str) -> str:
     """Get the OOTS index webpage and return the content."""
     result = requests.get(page_url, timeout=10)
-    if result.status_code == 200:
+    if result.status_code == STATUS_OK:
         return result.text
 
     _logger.error(
@@ -74,7 +76,7 @@ def save_image(image_url: str, filename: str) -> None:
     filepath = get_abs_path(OUTPUT_DIR + filename + extension)
     if not os.path.isfile(filepath):
         result = requests.get(image_url, stream=True, timeout=20)
-        if result.status_code == 200:
+        if result.status_code == STATUS_OK:
             result.raw.decode_content = True
             with open(filepath, "wb") as f:
                 shutil.copyfileobj(result.raw, f)
@@ -160,8 +162,6 @@ def main(raw_args: list[str]) -> None:
     """
     args = parse_args(raw_args)
     setup_logging(args.loglevel)
-    # setup colorama for cross-platform coloured terminal output
-    init()
 
     _logger.debug("Starting data slurping...")
     print(f"oots-get (C) Grant Ramsay 2024 (version {__version__})\n")
@@ -170,10 +170,7 @@ def main(raw_args: list[str]) -> None:
     check_or_create_folder(OUTPUT_DIR)
 
     # do specific depending on any command line arguements.
-    if args.only_new:
-        last_id = get_last_comic()
-    else:
-        last_id = 0
+    last_id = get_last_comic() if args.only_new else 0
 
     # get the comic index webpage and parse the links
     webdata = get_webpage(OOTS_URL)
@@ -204,10 +201,8 @@ def main(raw_args: list[str]) -> None:
 
 def run() -> None:
     """Call :func:`main` passing any CLI arguments."""
-    try:
+    with contextlib.suppress(KeyboardInterrupt):
         main(sys.argv[1:])
-    except KeyboardInterrupt:
-        pass
 
 
 if __name__ == "__main__":
