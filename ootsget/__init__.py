@@ -1,3 +1,4 @@
+"""Get the version of the package."""
 from importlib.metadata import (
     PackageNotFoundError,
     version,
