@@ -1,6 +1,83 @@
-[build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
+[tool.poetry]
+name = "oots-get"
+version = "1.1.0-beta.1"
+description = "Download all 'Order of the Stick' comics for local reading."
+authors = ["Grant Ramsay <grant@gnramsay.com>"]
+license = "MIT"
+readme = "README.md"
+
+packages = [{ include = "ootsget" }]
+
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Topic :: Utilities",
+  "Intended Audience :: End Users/Desktop",
+  "Environment :: Console",
 ]
-build-backend = "setuptools.build_meta"
+
+[tool.poetry.urls]
+"Pull Requests" = "https://github.com/gnramsay/oots-get/pulls"
+"Bug Tracker" = "https://github.com/gnramsay/oots-get/issues"
+# "Changelog" = "https://github.com/gnramsay/oots-get/blob/main/CHANGELOG.md"
+
+[tool.poetry.scripts]
+oots-get = "ootsget.ootsget:run"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+colorama = "^0.4.6"
+termcolor = "^2.3.0"
+bs4 = "^0.0.1"
+requests = "^2.29.0"
+lxml = "^5.1.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.13"
+mypy = "^1.8.0"
+types-requests = "^2.31.0.20240106"
+types-beautifulsoup4 = "^4.12.0.20240106"
+poethepoet = "^0.24.4"
+pre-commit = "^3.6.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+# setup 'PoeThePoet' tasks
+pre.cmd = "pre-commit run --all-files"
+pre.help = "Run pre-commit checks"
+mypy.cmd = "mypy ootsget/**/*.py tests/**/*.py --strict"
+mypy.help = "Run mypy checks"
+format.cmd = "ruff format ."
+format.help = "Format code with Ruff"
+ruff.cmd = "ruff check ."
+ruff.help = "Run Ruff checks"
+
+[tool.ruff]
+line-length = 80
+select = ["ALL"] # we are being very strict!
+ignore = [
+  "ANN101",
+  "PGH003",
+  "FBT002",
+  "FBT003",
+  "B006",
+] # These rules are too strict even for us 😝
+extend-ignore = ["COM812", "ISC001"] # these are ignored for ruff formatting
+
+src = ["ootsget"]
+target-version = "py39" # minimum python version supported
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "double"
+
+[tool.ruff.pep8-naming]
+classmethod-decorators = ["pydantic.validator", "pydantic.root_validator"]
+
+[tool.ruff.pydocstyle]
+convention = "google"

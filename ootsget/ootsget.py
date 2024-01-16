@@ -14,8 +14,9 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 from colorama import init
-from ootsget import __version__
 from termcolor import colored, cprint
+
+from ootsget import __version__
 
 OOTS_URL = "https://www.giantitp.com/comics/oots.html"
 COMIC_TEMPLATE = "https://www.giantitp.com/comics/oots{index}.html"
@@ -28,9 +29,9 @@ __license__ = "MIT"
 _logger = logging.getLogger(__name__)
 
 
-def get_webpage(page_url):
+def get_webpage(page_url: str) -> str:
     """Get the OOTS index webpage and return the content."""
-    result = requests.get(page_url)
+    result = requests.get(page_url, timeout=10)
     if result.status_code == 200:
         return result.text
     else:
@@ -45,17 +46,16 @@ def get_webpage(page_url):
         quit(1)
 
 
-def check_or_create_folder(folder_path):
+def check_or_create_folder(folder_path: str) -> None:
     """Check if the provided folder exists, and create if not.
 
     :param folder_path: Path to folder to create.
     :type folder_path: String
     """
     os.makedirs(get_abs_path(folder_path), exist_ok=True)
-    return
 
 
-def get_abs_path(file_path):
+def get_abs_path(file_path: str) -> str:
     """Return an absolute path, expanding '~' and environment variables.
 
     :param file_path: Path to be expanded
@@ -66,7 +66,7 @@ def get_abs_path(file_path):
     return os.path.abspath(os.path.expanduser(os.path.expandvars(file_path)))
 
 
-def save_image(image_url, filename):
+def save_image(image_url: str, filename: str) -> None:
     """Save the given url to the provided file.
 
     :param image_url: URL to an image file
@@ -77,7 +77,7 @@ def save_image(image_url, filename):
     extension = image_url[-4:]
     filepath = get_abs_path(OUTPUT_DIR + filename + extension)
     if not os.path.isfile(filepath):
-        result = requests.get(image_url, stream=True)
+        result = requests.get(image_url, stream=True, timeout=20)
         if result.status_code == 200:
             result.raw.decode_content = True
             with open(filepath, "wb") as f:
@@ -89,7 +89,7 @@ def save_image(image_url, filename):
         cprint(f"Skipping {filepath}, already exists.", "yellow")
 
 
-def parse_args(args):
+def parse_args(args: list[str]) -> argparse.Namespace:
     """Parse the Command line parameters.
 
     :param args: Comand line parameters passed by the user
@@ -103,7 +103,7 @@ def parse_args(args):
     parser.add_argument(
         "--version",
         action="version",
-        version="ootsget {ver}".format(ver=__version__),
+        version=f"ootsget {__version__}",
     )
 
     parser.add_argument(
@@ -132,7 +132,7 @@ def parse_args(args):
     return parser.parse_args(args)
 
 
-def setup_logging(loglevel):
+def setup_logging(loglevel: int) -> None:
     """Setup the logging level requested or use default.
 
     :param loglevel: requested loglevel.
@@ -147,7 +147,7 @@ def setup_logging(loglevel):
     )
 
 
-def get_last_comic():
+def get_last_comic() -> int:
     """Return the index number of the last (highest) comic downloaded."""
     return int(
         sorted(os.listdir(get_abs_path(OUTPUT_DIR)), reverse=True)[0].split(
@@ -156,19 +156,19 @@ def get_last_comic():
     )
 
 
-def main(args):
+def main(raw_args: list[str]) -> None:
     """Run the main function with logging.
 
     :param args: Command line args passed by user
     :type args: [type]
     """
-    args = parse_args(args)
+    args = parse_args(raw_args)
     setup_logging(args.loglevel)
     # setup colorama for cross-platform coloured terminal output
     init()
 
     _logger.debug("Starting data slurping...")
-    print(f"oots-get (C) Grant Ramsay 2022 (version {__version__})\n")
+    print(f"oots-get (C) Grant Ramsay 2024 (version {__version__})\n")
     cprint(f"Saving Comics to {get_abs_path(OUTPUT_DIR)}\n", "cyan")
 
     check_or_create_folder(OUTPUT_DIR)
@@ -206,7 +206,7 @@ def main(args):
     _logger.info("Script ends here")
 
 
-def run():
+def run() -> None:
     """Call :func:`main` passing any CLI arguments."""
     try:
         main(sys.argv[1:])
