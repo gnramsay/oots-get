@@ -21,7 +21,7 @@ from ootsget import __version__
 
 OOTS_URL: str = "https://www.giantitp.com/comics/oots.html"
 COMIC_TEMPLATE: str = "https://www.giantitp.com/comics/oots{index}.html"
-OUTPUT_DIR: Path = Path(Path.home() / "comics" / "oots2")
+OUTPUT_DIR: Path = Path(Path.home() / "comics" / "oots")
 
 STATUS_OK = 200
 

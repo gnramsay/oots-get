@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "oots-get"
-version = "1.1.0"
+version = "1.1.1"
 description = "Download all 'Order of the Stick' comics for local reading."
 authors = ["Grant Ramsay <grant@gnramsay.com>"]
 license = "MIT"
