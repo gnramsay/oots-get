@@ -71,6 +71,10 @@ plugins.md046.enabled = false
 
 [tool.ruff]
 line-length = 80
+src = ["ootsget"]
+target-version = "py39" # minimum python version supported
+
+[tool.ruff.lint]
 select = ["ALL"] # we are being very strict!
 ignore = [
   "ANN101",
@@ -81,15 +85,12 @@ ignore = [
 ] # These rules are too strict even for us 😝
 extend-ignore = ["COM812", "ISC001"] # these are ignored for ruff formatting
 
-src = ["ootsget"]
-target-version = "py39" # minimum python version supported
-
 [tool.ruff.format]
 indent-style = "space"
 quote-style = "double"
 
-[tool.ruff.pep8-naming]
+[tool.ruff.lint.pep8-naming]
 classmethod-decorators = ["pydantic.validator", "pydantic.root_validator"]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
