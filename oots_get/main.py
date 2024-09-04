@@ -15,7 +15,7 @@ import requests
 import typer
 import typer.colors
 from bs4 import BeautifulSoup
-from rich import print
+from rich import print as rprint
 
 from oots_get import __version__
 
@@ -25,6 +25,7 @@ OUTPUT_DIR: Path = Path(Path.home() / "comics" / "oots")
 
 STATUS_OK = 200
 HELP_STRING = "Download the 'Order of the Stick' comics locally."
+COPYRIGHT_YEARS = "2013-2024"
 
 app = typer.Typer(rich_markup_mode="rich", add_completion=False)
 
@@ -35,10 +36,10 @@ def get_webpage(page_url: str) -> str:
     if result.status_code == STATUS_OK:
         return result.text
 
-    print(
+    rprint(
         "Unable to read the OOTS data,please check your connection.",
     )
-    print("URL : %s", page_url)
+    rprint("URL : %s", page_url)
     sys.exit(1)
 
 
@@ -67,11 +68,11 @@ def save_image(image_url: str, filename: str) -> None:
             result.raw.decode_content = True
             with filepath.open(mode="wb") as f:
                 shutil.copyfileobj(result.raw, f)
-            print(f"[green]Saved {filepath}")
+            rprint(f"[green]Saved {filepath}")
         else:
-            print("Huh?")
+            rprint("Huh?")
     else:
-        print(f"[yellow]Skipping {filepath}, already exists.")
+        rprint(f"[yellow]Skipping {filepath}, already exists.")
 
 
 def get_last_comic() -> int:
@@ -101,15 +102,15 @@ def main(
 ) -> None:
     """Main function to download the comics."""
     if version:
-        print(
+        rprint(
             f"[green]OOTS-get - {HELP_STRING}[/green]"
             f"\nVersion: {__version__} "
-            "\u00a9 2013-2024\n"
+            f"\u00a9 {COPYRIGHT_YEARS}\n"
         )
         raise typer.Exit(0)
 
-    print(f"oots-get (C) Grant Ramsay 2013-2024 (version {__version__})\n")
-    print(f"[cyan]Saving Comics to {OUTPUT_DIR}\n")
+    rprint(f"oots-get (C) Grant Ramsay 2013-2024 (version {__version__})\n")
+    rprint(f"[cyan]Saving Comics to {OUTPUT_DIR}\n")
 
     check_or_create_folder(OUTPUT_DIR)
 
@@ -138,13 +139,13 @@ def main(
         image = bs.find_all("img", attrs={"src": re.compile("/comics/oots/")})
 
         if len(image) == 0:
-            print("Unable to find image for comic %s", index)
+            rprint("Unable to find image for comic %s", index)
             continue
 
         image_url = image[0]["src"]
         save_image(image_url, filename)
 
-    print("Operation Completed.\n")
+    rprint("Operation Completed.\n")
 
 
 if __name__ == "__main__":
