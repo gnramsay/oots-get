@@ -61,7 +61,6 @@ format.help = "Format code with Ruff"
 ruff.cmd = "ruff check ."
 ruff.help = "Run Ruff checks"
 
-
 # Generate a CHANGELOG.md
 changelog.cmd = "github-changelog-md -r oots-get -u gnramsay"
 changelog.help = "Generate a CHANGELOG.md file"
