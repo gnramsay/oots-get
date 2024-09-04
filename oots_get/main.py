@@ -17,7 +17,7 @@ import requests
 from bs4 import BeautifulSoup
 from rich import print  # pylint: disable=W0622
 
-from ootsget import __version__
+from oots_get import __version__
 
 OOTS_URL: str = "https://www.giantitp.com/comics/oots.html"
 COMIC_TEMPLATE: str = "https://www.giantitp.com/comics/oots{index}.html"
