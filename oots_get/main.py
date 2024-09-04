@@ -24,11 +24,7 @@ COMIC_TEMPLATE: str = "https://www.giantitp.com/comics/oots{index}.html"
 OUTPUT_DIR: Path = Path(Path.home() / "comics" / "oots")
 
 STATUS_OK = 200
-
-__author__ = "Grant Ramsay"
-__copyright__ = "Grant Ramsay"
-__license__ = "MIT"
-
+HELP_STRING = "Download the 'Order of the Stick' comics locally."
 
 app = typer.Typer(rich_markup_mode="rich", add_completion=False)
 
@@ -84,7 +80,7 @@ def get_last_comic() -> int:
 
 
 @app.command(
-    help="Download the 'Order of the Stick' comics locally.",
+    help=HELP_STRING,
     context_settings={"help_option_names": ["-h", "--help"]},
 )
 def main(
@@ -96,9 +92,23 @@ def main(
             help="Only check for, and download, new comics.",
         ),
     ] = False,
+    version: Annotated[
+        bool,
+        typer.Option(
+            "--version", "-v", is_eager=True, help="Show version info"
+        ),
+    ] = False,
 ) -> None:
     """Main function to download the comics."""
-    print(f"oots-get (C) Grant Ramsay 2024 (version {__version__})\n")
+    if version:
+        print(
+            f"[green]OOTS-get - {HELP_STRING}[/green]"
+            f"\nVersion: {__version__} "
+            "\u00a9 2013-2024\n"
+        )
+        raise typer.Exit(0)
+
+    print(f"oots-get (C) Grant Ramsay 2013-2024 (version {__version__})\n")
     print(f"[cyan]Saving Comics to {OUTPUT_DIR}\n")
 
     check_or_create_folder(OUTPUT_DIR)

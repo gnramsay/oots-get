@@ -1,14 +1,7 @@
 """Get the version of the package."""
 
-from importlib.metadata import (
-    PackageNotFoundError,
-    version,
-)
+from pathlib import Path
 
-try:
-    # Change here if project is renamed and does not equal the package name
-    __version__ = version("oots-get")
-except PackageNotFoundError:  # pragma: no cover
-    __version__ = "unknown"
-finally:
-    del version, PackageNotFoundError
+from single_source import get_version
+
+__version__ = get_version(__name__, Path(__file__).parent.parent)
