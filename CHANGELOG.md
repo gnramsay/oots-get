@@ -6,23 +6,16 @@ project since the first release.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased](https://github.com/gnramsay/oots-get/tree/HEAD)
+## [1.2.0](https://github.com/gnramsay/oots-get/releases/tag/1.2.0) (2024-09-04)
 
-These are the changes that have been merged to the repository since the last
-release. If you want to try out these changes, you can install the latest
-version from the main branch by running:
+**New Features**
 
-```console
-$ pip install git+https://github.com/gnramsay/oots-get
-```
+- Migrate from 'argparse' to using 'Typer' for the CLI ([#76](https://github.com/gnramsay/oots-get/pull/76)) by [gnramsay](https://github.com/gnramsay)
 
-or, if using pipx:
+**Refactoring**
 
-```console
-$ pipx install git+https://github.com/gnramsay/oots-get
-```
-
-Everything in this section will be included in the next official release.
+- Refactor code into helper functions and optimize ([#77](https://github.com/gnramsay/oots-get/pull/77)) by [gnramsay](https://github.com/gnramsay)
+- Migrate project structure to 'uv' ([#75](https://github.com/gnramsay/oots-get/pull/75)) by [gnramsay](https://github.com/gnramsay)
 
 **Dependency Updates**
 
@@ -38,7 +31,7 @@ Everything in this section will be included in the next official release.
 - Bump types-requests from 2.31.0.20240106 to 2.31.0.20240406 ([#32](https://github.com/gnramsay/oots-get/pull/32)) by [dependabot[bot]](https://github.com/apps/dependabot)
 - *and 4 more dependency updates*
 
-[`Full Changelog`](https://github.com/gnramsay/oots-get/compare/v1.1.1...HEAD) | [`Diff`](https://github.com/gnramsay/oots-get/compare/v1.1.1...HEAD.diff) | [`Patch`](https://github.com/gnramsay/oots-get/compare/v1.1.1...HEAD.patch)
+[`Full Changelog`](https://github.com/gnramsay/oots-get/compare/v1.1.1...1.2.0) | [`Diff`](https://github.com/gnramsay/oots-get/compare/v1.1.1...1.2.0.diff) | [`Patch`](https://github.com/gnramsay/oots-get/compare/v1.1.1...1.2.0.patch)
 
 ## [v1.1.1](https://github.com/gnramsay/oots-get/releases/tag/v1.1.1) (2024-01-16)
 

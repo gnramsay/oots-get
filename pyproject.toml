@@ -1,6 +1,6 @@
 [project]
 name = "oots-get"
-version = "1.2.0-dev"
+version = "1.2.0"
 description = "Download all 'Order of the Stick' comics for local reading."
 license = "MIT"
 readme = "README.md"
