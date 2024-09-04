@@ -4,18 +4,18 @@ Create a local archive of the excellent web comic "The Order Of the Stick
 (https://www.giantitp.com/comics/oots.html), comic images only.
 """
 
-import argparse
-import contextlib
-import logging
 import os
 import re
 import shutil
 import sys
 from pathlib import Path
+from typing import Annotated
 
 import requests
+import typer
+import typer.colors
 from bs4 import BeautifulSoup
-from rich import print  # pylint: disable=W0622
+from rich import print as rprint
 
 from oots_get import __version__
 
@@ -24,12 +24,10 @@ COMIC_TEMPLATE: str = "https://www.giantitp.com/comics/oots{index}.html"
 OUTPUT_DIR: Path = Path(Path.home() / "comics" / "oots")
 
 STATUS_OK = 200
+HELP_STRING = "Download the 'Order of the Stick' comics locally."
+COPYRIGHT_YEARS = "2013-2024"
 
-__author__ = "Grant Ramsay"
-__copyright__ = "Grant Ramsay"
-__license__ = "MIT"
-
-_logger = logging.getLogger(__name__)
+app = typer.Typer(rich_markup_mode="rich", add_completion=False)
 
 
 def get_webpage(page_url: str) -> str:
@@ -38,10 +36,10 @@ def get_webpage(page_url: str) -> str:
     if result.status_code == STATUS_OK:
         return result.text
 
-    _logger.error(
+    rprint(
         "Unable to read the OOTS data,please check your connection.",
     )
-    _logger.error("URL : %s", page_url)
+    rprint("URL : %s", page_url)
     sys.exit(1)
 
 
@@ -70,69 +68,11 @@ def save_image(image_url: str, filename: str) -> None:
             result.raw.decode_content = True
             with filepath.open(mode="wb") as f:
                 shutil.copyfileobj(result.raw, f)
-            print(f"[green]Saved {filepath}")
+            rprint(f"[green]Saved {filepath}")
         else:
-            print("Huh?")
+            rprint("Huh?")
     else:
-        print(f"[yellow]Skipping {filepath}, already exists.")
-
-
-def parse_args(args: list[str]) -> argparse.Namespace:
-    """Parse the Command line parameters.
-
-    :param args: Comand line parameters passed by the user
-    :type args: [type]
-    :return: A Parser Object
-    :rtype: ArguementParser
-    """
-    parser = argparse.ArgumentParser(
-        description=f"oots-get (C) Grant Ramsay 2022 (Version {__version__})"
-    )
-    parser.add_argument(
-        "--version",
-        action="version",
-        version=f"ootsget {__version__}",
-    )
-
-    parser.add_argument(
-        "--only-new",
-        "-n",
-        action="store_true",
-        help="Only check for, and download, new comics.",
-    )
-
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        dest="loglevel",
-        help="set loglevel to INFO",
-        action="store_const",
-        const=logging.INFO,
-    )
-    parser.add_argument(
-        "-vv",
-        "--very-verbose",
-        dest="loglevel",
-        help="set loglevel to DEBUG",
-        action="store_const",
-        const=logging.DEBUG,
-    )
-    return parser.parse_args(args)
-
-
-def setup_logging(loglevel: int) -> None:
-    """Setup the logging level requested or use default.
-
-    :param loglevel: requested loglevel.
-    :type loglevel: [type]
-    """
-    logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-    logging.basicConfig(
-        level=loglevel,
-        stream=sys.stdout,
-        format=logformat,
-        datefmt="%Y-%m-%d %H:%M:%S",
-    )
+        rprint(f"[yellow]Skipping {filepath}, already exists.")
 
 
 def get_last_comic() -> int:
@@ -140,23 +80,42 @@ def get_last_comic() -> int:
     return int(sorted(os.listdir(OUTPUT_DIR), reverse=True)[0].split("-")[0])
 
 
-def main(raw_args: list[str]) -> None:
-    """Run the main function with logging.
+@app.command(
+    help=HELP_STRING,
+    context_settings={"help_option_names": ["-h", "--help"]},
+)
+def main(
+    only_new: Annotated[
+        bool,
+        typer.Option(
+            "--only-new",
+            "-n",
+            help="Only check for, and download, new comics.",
+        ),
+    ] = False,
+    version: Annotated[
+        bool,
+        typer.Option(
+            "--version", "-v", is_eager=True, help="Show version info"
+        ),
+    ] = False,
+) -> None:
+    """Main function to download the comics."""
+    if version:
+        rprint(
+            f"[green]OOTS-get - {HELP_STRING}[/green]"
+            f"\nVersion: {__version__} "
+            f"\u00a9 {COPYRIGHT_YEARS}\n"
+        )
+        raise typer.Exit(0)
 
-    :param args: Command line args passed by user
-    :type args: [type]
-    """
-    args = parse_args(raw_args)
-    setup_logging(args.loglevel)
-
-    _logger.debug("Starting data slurping...")
-    print(f"oots-get (C) Grant Ramsay 2024 (version {__version__})\n")
-    print(f"[cyan]Saving Comics to {OUTPUT_DIR}\n")
+    rprint(f"oots-get (C) Grant Ramsay 2013-2024 (version {__version__})\n")
+    rprint(f"[cyan]Saving Comics to {OUTPUT_DIR}\n")
 
     check_or_create_folder(OUTPUT_DIR)
 
     # do specific depending on any command line arguements.
-    last_id = get_last_comic() if args.only_new else 0
+    last_id = get_last_comic() if only_new else 0
 
     # get the comic index webpage and parse the links
     webdata = get_webpage(OOTS_URL)
@@ -180,21 +139,14 @@ def main(raw_args: list[str]) -> None:
         image = bs.find_all("img", attrs={"src": re.compile("/comics/oots/")})
 
         if len(image) == 0:
-            _logger.error("Unable to find image for comic %s", index)
+            rprint("Unable to find image for comic %s", index)
             continue
 
         image_url = image[0]["src"]
         save_image(image_url, filename)
 
-    print("Operation Completed.\n")
-    _logger.info("Script ends here")
-
-
-def run() -> None:
-    """Call :func:`main` passing any CLI arguments."""
-    with contextlib.suppress(KeyboardInterrupt):
-        main(sys.argv[1:])
+    rprint("Operation Completed.\n")
 
 
 if __name__ == "__main__":
-    run()
+    app()

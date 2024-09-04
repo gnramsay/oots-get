@@ -1,6 +1,6 @@
 [project]
 name = "oots-get"
-version = "1.1.1"
+version = "1.2.0-dev"
 description = "Download all 'Order of the Stick' comics for local reading."
 license = "MIT"
 readme = "README.md"
@@ -23,7 +23,9 @@ dependencies = [
   "lxml == 5.3.0",
   "requests == 2.32.3",
   "rich == 13.8.0",
+  "single-source>=0.4.0",
   "termcolor == 2.4.0",
+  "typer>=0.12.5",
 ]
 
 [project.urls]
@@ -33,7 +35,7 @@ dependencies = [
 "Repository" = "https://github.com/gnramsay/oots-get"
 
 [project.scripts]
-oots-get = "oots_get.main:run"
+oots-get = "oots_get.main:app"
 
 [tool.uv]
 dev-dependencies = [
