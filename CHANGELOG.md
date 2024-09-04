@@ -6,7 +6,9 @@ project since the first release.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [1.2.0](https://github.com/gnramsay/oots-get/releases/tag/1.2.0) (2024-09-04)
+## [v1.2.0](https://github.com/gnramsay/oots-get/releases/tag/v1.2.0) (2024-09-04)
+
+**_DING!_**
 
 **New Features**
 
@@ -31,7 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Bump types-requests from 2.31.0.20240106 to 2.31.0.20240406 ([#32](https://github.com/gnramsay/oots-get/pull/32)) by [dependabot[bot]](https://github.com/apps/dependabot)
 - *and 4 more dependency updates*
 
-[`Full Changelog`](https://github.com/gnramsay/oots-get/compare/v1.1.1...1.2.0) | [`Diff`](https://github.com/gnramsay/oots-get/compare/v1.1.1...1.2.0.diff) | [`Patch`](https://github.com/gnramsay/oots-get/compare/v1.1.1...1.2.0.patch)
+[`Full Changelog`](https://github.com/gnramsay/oots-get/compare/v1.1.1...v1.2.0) | [`Diff`](https://github.com/gnramsay/oots-get/compare/v1.1.1...v1.2.0.diff) | [`Patch`](https://github.com/gnramsay/oots-get/compare/v1.1.1...v1.2.0.patch)
 
 ## [v1.1.1](https://github.com/gnramsay/oots-get/releases/tag/v1.1.1) (2024-01-16)
 
