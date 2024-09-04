@@ -60,7 +60,9 @@ def main(
         )
         raise typer.Exit(0)
 
-    rprint(f"oots-get (C) Grant Ramsay 2013-2024 (version {__version__})\n")
+    rprint(
+        f"oots-get (C) Grant Ramsay {COPYRIGHT_YEARS} (version {__version__})\n"
+    )
     rprint(f"[cyan]Saving Comics to {OUTPUT_DIR}\n")
 
     check_or_create_folder(OUTPUT_DIR)
@@ -73,7 +75,7 @@ def main(
     links = bs.find_all("p", attrs={"class": "ComicList"})
     for item in links:
         index, filename = item.text.split("-", 1)
-        index: str = index.strip().zfill(4)
+        index = index.strip().zfill(4)
 
         # break here if we are only getting new comics
         if last_id >= int(index):
