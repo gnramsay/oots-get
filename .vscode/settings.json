@@ -17,6 +17,7 @@
     "jinja-html": "html"
   },
   "emmet.triggerExpansionOnTab": true,
+  "evenBetterToml.formatter.columnWidth": 80,
   "files.associations": {
     "**/*.html": "html",
     "**/*.tpl": "jinja",
@@ -36,6 +37,7 @@
   "git.enableCommitSigning": true,
   "html.format.indentHandlebars": true,
   "html.format.templating": true,
+  "markdownlint.ignore": ["CHANGELOG.md"],
   "material-icon-theme.languages.associations": {
     "jinja-html": "django"
   },
@@ -46,7 +48,7 @@
   "python.analysis.extraPaths": [],
   "python.analysis.indexing": true,
   "python.analysis.stubPath": "/home/seapagan/stubs",
-  "python.analysis.typeCheckingMode": "off", // using the mypy extension instead
+  "python.analysis.typeCheckingMode": "off",
   "python.languageServer": "Pylance",
   "python.pythonPath": "./.venv/bin/python",
   "python.testing.pytestArgs": ["tests"],
@@ -54,6 +56,7 @@
   "python.testing.unittestEnabled": false,
   "ruff.fixAll": false,
   "ruff.organizeImports": true,
+  "codeQL.githubDatabase.download": "never",
   "python.analysis.autoFormatStrings": true,
   "files.watcherExclude": {
     "**/.git/objects/**": true,
