@@ -492,6 +492,7 @@ dependencies = [
     { name = "requests" },
     { name = "rich" },
     { name = "termcolor" },
+    { name = "typer" },
 ]
 
 [package.dev-dependencies]
@@ -513,6 +514,7 @@ requires-dist = [
     { name = "requests", specifier = "==2.32.3" },
     { name = "rich", specifier = "==13.8.0" },
     { name = "termcolor", specifier = "==2.4.0" },
+    { name = "typer", specifier = ">=0.12.5" },
 ]
 
 [package.metadata.requires-dev]
