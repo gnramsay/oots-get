@@ -67,6 +67,12 @@ ruff.help = "Run Ruff checks"
 changelog.cmd = "github-changelog-md -r oots-get -u gnramsay"
 changelog.help = "Generate a CHANGELOG.md file"
 
+# build and publish to PyPI
+build.cmd = "hatch build"
+build.help = "Build the package"
+publish.cmd = "hatch publish"
+publish.help = "Publish to PyPI"
+
 [tool.ruff]
 line-length = 80
 src = ["oots_get"]
