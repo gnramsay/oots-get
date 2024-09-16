@@ -42,7 +42,7 @@ tomli==2.0.1
 typer==0.12.5
 types-beautifulsoup4==4.12.0.20240511
 types-html5lib==1.1.11.20240806
-types-requests==2.32.0.20240712
+types-requests==2.32.0.20240914
 typing-extensions==4.12.2
 urllib3==2.2.2
 virtualenv==20.26.3
